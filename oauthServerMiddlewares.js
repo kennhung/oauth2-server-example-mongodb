@@ -32,8 +32,17 @@ module.exports.token = (req, res, next) => {
 module.exports.authorize = (req, res, next) => {
   const request = new Request(req);
   const response = new Response(res);
+  const options = {
+    authenticateHandler: {
+      handle: (data) => {
+        // Whatever you need to do to authorize / retrieve your user from post data here
+        // return { id: "5d5d69332691521857e1be81" };
+        return model.getUserByID("5d5d69332691521857e1be81");
+      }
+    }
+  }
 
-  oauth.authorize(request, response).then((authorizationCode) => {
+  oauth.authorize(request, response, options).then((authorizationCode) => {
     // TODO: Here i get a redirect response
     console.log(authorizationCode);
     res.status(response.status).set(response.headers).end();

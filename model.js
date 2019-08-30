@@ -103,6 +103,8 @@ function getAuthorizationCode(code) {
         return false;
       }
 
+      console.log(authCodeModel.user);
+
       const extendedClient = Object.assign(authCodeModel.client, { id: authCodeModel.client.clientId });
       return Object.assign(authCodeModel, { client: extendedClient });
     })
@@ -183,6 +185,12 @@ function verifyScope(token, scope) {
   return true;
 }
 
+function getUserByID(id){
+  return User.findById(id).then((doc)=>{
+    return doc;
+  })
+}
+
 module.exports = {
   // generateAccessToken(client, user, scope) optional
   // generateAuthorizationCode(), optional
@@ -198,5 +206,6 @@ module.exports = {
   saveToken,
   saveAuthorizationCode,
   validateScope,
-  verifyScope
+  verifyScope,
+  getUserByID
 };

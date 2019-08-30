@@ -19,6 +19,12 @@ app.use(cookieParser());
 
 authRoutes(app);
 
+app.get("/oauth/callback", (req, res) => {
+  res.json({
+    query: req.query
+  })
+});
+
 app.use((req, res, next) => {
   const err = new Error('Not Found');
   err.status = 404;
@@ -34,4 +40,4 @@ app.use((err, req, res, next) => {
 });
 
 
-app.listen(8000, err => (err ? console.log('Error happened', err) : console.log('Server is up')));
+app.listen(3000, err => (err ? console.log('Error happened', err) : console.log('Server is up')));
